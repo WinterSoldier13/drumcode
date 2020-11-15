@@ -7,6 +7,7 @@ let player: AudioPlayer;
 let listener: EditorListener;
 let extensionPos: number;
 let isActive: boolean;
+var musicPlayer = require('play-sound')({})
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('Congratulations, your extension "keyboard-sounds" is now active!');
@@ -43,21 +44,19 @@ export class EditorListener {
 
         let pressedKey = e.contentChanges[0].text;
         if (pressedKey == "") {
-            // backspace or delete pressed
 			// this.player.play(this._deleteAudio);
 			vscode.window.showInformationMessage("Backspace")
         } else if (pressedKey == " ") {
-            // space pressed
 			// this.player.play(this._spaceAudio);
 			vscode.window.showInformationMessage("space")
-			
-		}
-		else if( pressedKey == "A")
-		{
-			vscode.window.showInformationMessage("A is pressed")
+			musicPlayer.play("C:\\Users\\Ayush Singh\\Music\\atlas.mp3", function(err: String){
+				if (err)
+				{
+					vscode.window.showErrorMessage(err.toString())
+				}
+			  })
 		}
 		 else {
-            // any other keys
 			vscode.window.showInformationMessage(pressedKey)
         }
     }
