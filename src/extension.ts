@@ -3,6 +3,10 @@ import * as vscode from 'vscode';
 // import * as path from 'path';
 import {spawn} from 'child_process';
 
+
+const util = require('util');
+const exec = util.promisify(require('child_process').exec);
+
 let player: AudioPlayer;
 let listener: EditorListener;
 let extensionPos: number;
@@ -47,14 +51,25 @@ export class EditorListener {
 			// this.player.play(this._deleteAudio);
 			vscode.window.showInformationMessage("Backspace")
         } else if (pressedKey == " ") {
-			// this.player.play(this._spaceAudio);
+			// this.player.play("C:\\Users\\Ayush Singh\\Music\\atlas.mp3");
 			vscode.window.showInformationMessage("space")
-			musicPlayer.play("C:\\Users\\Ayush Singh\\Music\\atlas.mp3", function(err: String){
-				if (err)
-				{
-					vscode.window.showErrorMessage(err.toString())
-				}
-			  })
+			// musicPlayer.play("C:\\Users\\Ayush Singh\\Music\\atlas.mp3", function(err: String){
+			// 	if (err)
+			// 	{
+			// 		vscode.window.showErrorMessage(err.toString())
+			// 	}
+			//   })
+
+
+			
+			try {
+				exec('mplayer "C:\\Users\\Ayush Singh\\Music\\atlas.mp3" ')
+			}
+			catch (err)
+			{
+				vscode.window.showErrorMessage(err)
+			}
+			  
 		}
 		 else {
 			vscode.window.showInformationMessage(pressedKey)
